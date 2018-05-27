@@ -11,6 +11,7 @@ import java.util.stream.Stream;
 
 public class Main {
 
+    // klasa : metoda : parametr -> wynik (czerwo lub zielo?)
     public static void main(String[] args) {
         final Main main = new Main();
         Stream<Method> methodStream = Arrays.stream(Functional1.class.getDeclaredMethods()).filter(m -> m.getModifiers() == 1);
