@@ -1,0 +1,18 @@
+== Shell
+
+Please create an interactive shell. Said shell should
+
+. display the starting directory
+.. starting directory is where we start, naturally
+. allow to navigate directories with a `cd` command
+. allow to list files with a `ls` command
+. allow to create a new empty file with a `[]` command 
+.. followed by the file name: `[] empty`
+.. no name should inform that a name is required
+. offer help for commands.
+.. each command should have a usage, which:
+.. at the minimum, informs of what the command does and offers one example
+.. is called via appending `-h` to a command, like so: `[] -?` or `ls -?`
+. quit on `qt`
+. be extensible with other commands
+. tell that it doesn't know the command when we enter something else
