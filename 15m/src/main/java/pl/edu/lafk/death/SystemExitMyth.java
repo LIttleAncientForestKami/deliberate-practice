@@ -1,4 +1,4 @@
-package pl.lafk.death;
+package pl.edu.lafk.death;
 
 /**
  * Demonstrates the case when System.exit will not work

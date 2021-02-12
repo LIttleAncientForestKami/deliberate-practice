@@ -12,7 +12,7 @@ Please create an interactive shell. Said shell should
 . offer help for commands.
 .. each command should have a usage, which:
 .. at the minimum, informs of what the command does and offers one example
-.. is called via appending `-h` to a command, like so: `[] -?` or `ls -?`
+.. is called via appending `-?` to a command, like so: `[] -?` or `ls -?`
 . quit on `qt`
 . be extensible with other commands
 . tell that it doesn't know the command when we enter something else
