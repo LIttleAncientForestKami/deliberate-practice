@@ -18,7 +18,7 @@ if __name__ == "__main__":
     range_close = ">"
     while users != secret and nr_of_tries != max_nr_of_tries:
         try:
-            msg = f"Range is {range_open}{low}, {high}{range_close}. Your number? (Attempt {nr_of_tries+1}) "
+            msg = f"Range is {range_open}{low}, {high}{range_close}. Your number (attempt {nr_of_tries+1})? "
             nr_of_tries += 1
             users = int(input(msg))
         except ValueError: 
@@ -28,7 +28,9 @@ if __name__ == "__main__":
         if users < secret: print("Too low!"); low = users; range_open = "("
     if users != secret: 
         print("Ouch. A shame, but you were only allowed %d tries in total." % max_nr_of_tries)
-    else: 
-        print("Well done, it was indeed %d, took you %d out of %d tries! Thanks for playing!" % (secret, nr_of_tries, max_nr_of_tries))
+    elif max_nr_of_tries:
+            print("Well done, it was indeed %d, took you %d out of %d tries! Thanks for playing!" % (secret, nr_of_tries, max_nr_of_tries))
+    else:
+            print("Well done, it was indeed %d, took you %d tries! Thanks for playing!" % (secret, nr_of_tries))
 
 
