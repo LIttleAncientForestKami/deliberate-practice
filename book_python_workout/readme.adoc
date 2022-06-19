@@ -1,0 +1,8 @@
+= About
+
+Exercises for a book by Reuven Lerner, Python Workout. Book has 50 short projects, aimed at practicing Python coding.
+
+== Numbers
+
+. Guesing game
+. TBA
