@@ -1,0 +1,180 @@
+== Joins and subqueries
+
+.Problem: Members' bookings start times
+[source, sql]
+----
+select b.starttime from cd.bookings b, cd.members m 
+where b.memid = m.memid 
+and (m.firstname || m.surname) like 'DavidFarrell';
+
+// or
+
+select bks.starttime from cd.bookings bks
+	inner join cd.members mems
+		on mems.memid = bks.memid
+where
+	mems.firstname='David'
+	and mems.surname='Farrell';
+----
+
+
+.Problem: Work out start times for tennis courts' bookings - https://pgexercises.com/questions/joins/simplejoin2.html
+[source, sql]
+----
+select b.starttime as start, f.name from cd.bookings as b, cd.facilities as f
+where b.facid = f.facid
+and b.starttime >= '2012-09-21'
+and b.starttime < '2012-09-22'
+and f.name like 'Tennis%'
+order by 1;
+
+// or inner join cd.facilities f on ...
+----
+
+.Problem: All members who recommended another
+[source, sql]
+----
+select m.firstname, m.surname from cd.members as m, 
+(select distinct recommendedby as r_id from cd.members where recommendedby IS NOT NULL) as recommenders
+where m.memid = recommenders.r_id order by m.surname, m.firstname;
+
+// or, via inner join
+
+select distinct recs.firstname as firstname, recs.surname as surname
+	from 
+		cd.members mems
+		inner join cd.members recs
+			on recs.memid = mems.recommendedby
+order by surname, firstname;
+----
+
+.Problem: All members with their recommender
+[source, sql]
+----
+select mems.firstname as memfname, mems.surname as memsname, 
+	recs.firstname as recfname, recs.surname as recsname
+from cd.members mems left outer join cd.members recs
+	on recs.memid = mems.recommendedby
+order by 2, 1;
+
+// pewnie by się dało poprzez CTE - Common Table Expression, gdzie robisz tabelę przed kwerendą, do pomocy
+----
+
+.Problem: All members who used a tennis court
+[source, sql]
+----
+select distinct m.firstname || ' ' || m.surname as member, f.name as facility
+from cd.members as m, cd.bookings as b, cd.facilities as f
+where m.memid = b.memid
+and b.facid = f.facid
+and f.name like 'Tennis Court%' 
+order by 1,2
+
+/* or via inner joins */
+
+select distinct mems.firstname || ' ' || mems.surname as member, facs.name as facility
+	from 
+		cd.members mems
+		inner join cd.bookings bks
+			on mems.memid = bks.memid
+		inner join cd.facilities facs
+			on bks.facid = facs.facid
+	where
+		facs.name in ('Tennis Court 2','Tennis Court 1')
+order by member, facility    
+----
+
+
+.Problem: List of costly bookings
+[source, sql]
+----
+select /*distinct*/ m.firstname || ' ' || m.surname as member, 
+	f.name as facility, 
+	case b.memid when 0 then f.guestcost*b.slots
+		else f.membercost*b.slots end as cost
+	/*, b.starttime*/
+from cd.members as m, cd.bookings as b, cd.facilities as f
+where
+/*b.starttime >= '2012-09-14' and b.starttime < '2012-09-15'*/
+b.starttime between '2012-09-14 00:00:00' and '2012-09-14 23:59:59'
+and m.memid = b.memid
+and b.facid = f.facid
+and ((m.memid = 0 and b.slots*f.guestcost > 30) 
+	or (m.memid > 0 and b.slots*f.membercost > 30))
+order by 3 desc
+
+/* or */
+
+select mems.firstname || ' ' || mems.surname as member, 
+	facs.name as facility, 
+	case 
+		when mems.memid = 0 then
+			bks.slots*facs.guestcost
+		else
+			bks.slots*facs.membercost
+	end as cost
+        from
+                cd.members mems                
+                inner join cd.bookings bks
+                        on mems.memid = bks.memid
+                inner join cd.facilities facs
+                        on bks.facid = facs.facid
+        where
+		bks.starttime >= '2012-09-14' and 
+		bks.starttime < '2012-09-15' and (
+			(mems.memid = 0 and bks.slots*facs.guestcost > 30) or
+			(mems.memid != 0 and bks.slots*facs.membercost > 30)
+		)
+order by cost desc;
+----
+
+.Problem: Members and their recommender (no joins)
+[source, sql]
+----
+select distinct firstname || ' ' || surname as member, 
+	(select r.firstname || ' ' || r.surname as member 
+	 from cd.members r
+	 where r.memid = m.recommendedby) as recommender
+from cd.members m
+order by 1;
+
+/* zła wersja, bo ręczna: :P:P:P
+
+select firstname || ' ' || surname as member, 
+case recommendedby
+	when 1 then (select firstname || ' ' || surname as member from cd.members where memid = 1)
+	when 2 then (select firstname || ' ' || surname as member from cd.members where memid = 2)
+	when 20 then (select firstname || ' ' || surname as member from cd.members where memid = 20)
+	when 3 then (select firstname || ' ' || surname as member from cd.members where memid = 3)
+	when 30 then (select firstname || ' ' || surname as member from cd.members where memid = 30)
+    /* tu dalsze wheny */	
+	else ' '
+	end as recommender
+from cd.members
+where memid > 0
+*/
+----
+
+.Problem: List of costly bookings (subquery)
+[source, sql]
+----
+select sub.member, sub.facility, sub.cost from
+(
+  select m.firstname || ' ' || m.surname as member, 
+	f.name as facility, 
+	case b.memid when 0 
+	    then f.guestcost*b.slots
+		else f.membercost*b.slots 
+	   end as cost
+  
+  from cd.members as m, cd.bookings as b, cd.facilities as f
+  where
+	/*b.starttime >= '2012-09-14' and b.starttime < '2012-09-15'*/
+	b.starttime between '2012-09-14 00:00:00' and '2012-09-14 23:59:59'
+	and m.memid = b.memid
+	and b.facid = f.facid
+) as sub
+where sub.cost > 30
+order by 3 desc;
+----
+
