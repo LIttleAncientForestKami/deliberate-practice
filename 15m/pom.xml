@@ -6,7 +6,7 @@
 
     <groupId>pl.lafk</groupId>
     <artifactId>deliberate-practice-15m</artifactId>
-    <version>0.3</version>
+    <version>0.4</version>
     <name>Deliberate practices for 15m.</name>
     <description>Deliberate Practice: act of doing various things deliberately, just to practice your skills. Inspired by Yusen, then taken further.</description>
     <url>lafk.pl</url>
@@ -16,7 +16,7 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
              <!-- https://maven.apache.org/general.html#special-characters-site -->
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-        <project.java.version>14</project.java.version>
+        <project.java.version>18</project.java.version>
         <maven.compiler.source>${project.java.version}</maven.compiler.source>
         <maven.compiler.target>${project.java.version}</maven.compiler.target>
         <maven.compiler.release>${project.java.version}</maven.compiler.release>
