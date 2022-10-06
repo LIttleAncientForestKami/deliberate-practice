@@ -1,4 +1,4 @@
-package pl.edu.lafk.reverse_string;
+package pl.edu.lafk.reverse;
 
 import java.util.Objects;
 import java.util.stream.Stream;
@@ -12,10 +12,10 @@ import java.util.stream.Stream;
  *     <li>reverse every word without reversing word order</li>
  * </ol>
  *
- * @see a JShell snippet, <code>odwracamy.jsh</code> for recursive approach reversing just word order
+ * @see a JShell snippet, <code>odwracamyNapis.jsh</code> for recursive approach reversing just word order
  * @author Tomasz @LAFK_pl Borek
  */
-class Main {
+class Words {
 
     /*
     TODO: na przyszłość,

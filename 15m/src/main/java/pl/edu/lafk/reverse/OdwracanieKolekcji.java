@@ -1,4 +1,4 @@
-package pl.edu.lafk.reverse_string;
+package pl.edu.lafk.reverse;
 
 import java.util.Arrays;
 import java.util.Collections;

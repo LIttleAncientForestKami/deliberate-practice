@@ -4,4 +4,4 @@
  * 2. word is separated by spaces
  * 3. no leading or trailing spaces, no long spaces or tabs
  */
-package pl.edu.lafk.reverse_string;
+package pl.edu.lafk.reverse;
