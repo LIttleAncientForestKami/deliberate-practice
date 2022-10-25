@@ -11,10 +11,10 @@
     </parent>
   
     <groupId>pl.lafk</groupId>
-    <artifactId>deliberate-practice-15m</artifactId>
-    <version>0.8</version>
-    <name>Deliberate practice tasks for 15m.</name>
-
+    <artifactId>deliberate-practice-1h</artifactId>
+    <version>0.3</version>
+    <name>Deliberate practice tasks for 1h.</name>
+  
     <properties>
     </properties>
 

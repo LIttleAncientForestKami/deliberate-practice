@@ -5,14 +5,22 @@ Problems to tackle for code kata, callisthenics etc.
 
 Also, code from various practice sites (on relevant branches or in relevant dirs)
 
+Thanks to software craftsmanship circles for solidifying this idea in me and for my parents and violin for instilling it.
+
 ## 15min
 
-15 min branch came to be due to Yusen Zhang. My thanks, Yusen.
+15 min section came to be due to Yusen Zhang. My thanks, Yusen.
 Idea is to have a short exercise in under 15 minutes. 
 
 His YT channel: https://www.youtube.com/channel/UCVnZcZrCU3vNfeqU3zD3qbg
 
 1. Reverse a string, Java: https://www.youtube.com/watch?v=jwxr3IuheV4
+
+## 1h
+
+1h section was a natural evolution of the 15min one, which was nicely show-cased and used during Java Academy. 
+
+Some tasks take more than 15 minutes. Some only at first (fetching a page via HTTP, when done for the first time, using new Java 11 API, took around 30-40m), some even after numerous tries. Also, LeetCode has a nice section for exams and they take 1h.
 
 ## Kata
 

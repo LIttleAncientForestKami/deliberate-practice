@@ -1,0 +1,7 @@
+== Under 1 hour
+
+Tasks that took me under 1 hour:
+
+1. OOP guessing game
+2. Helion free ebook page fetcher (had to learn the bloody API)
+3. In the future: LeetCode hourly exams

@@ -1,0 +1,21 @@
+== LeetCode
+
+https://leetcode.com/problems/reverse-integer/solution/
+https://leetcode.com/problems/add-two-numbers/solution/
+https://leetcode.com/problems/longest-substring-without-repeating-characters/
+https://leetcode.com/problems/longest-palindromic-substring/
+https://leetcode.com/problems/generate-parentheses/
+https://leetcode.com/problems/longest-common-prefix/
+https://stackify.com/streams-guide-java-8/
+https://medium.com/javarevisited/java-8-stream-api-with-examples-fc7b083e9ebb
+
+
+class Solution {
+    public int reverse(int x) {
+        try {
+            return x/Math.abs(x) * Integer.parseInt(new StringBuilder("" + Math.abs(x)).reverse().toString());
+        } catch (NumberFormatException|ArithmeticException e) {
+            return 0;         
+        }
+    }
+}https://leetcode.com/problems/reverse-integer/solution/

@@ -1,5 +1,6 @@
 package pl.edu.lafk.leetcode;
 
+import java.util.Collections;
 import java.util.EmptyStackException;
 import java.util.Set;
 import java.util.Stack;
@@ -24,10 +25,10 @@ class EasyInterviewValidParenthesis {
   private static final Set<Character> CLOSINGS = Set.of(')', ']', '}');
 
   public static void main(String[] args) {
-    Stream<String> happyPath = Stream.of("[]()", "[]{}", "{}()", "()[]{}", "{[]}");
+    Stream<String> happyPath = Stream.of("[]()", "[]{}", "{}()", "()[]{}", "{[]}", "{()}");
     Stream<String> borderPath = Stream.of("()", "[]", "{}");
     Stream<String> illegalChars = Stream.of("a", "0", ",", "()a", "[0]{}", "{[,.]+-*/}");
-    Stream<String> unhappyPath = Stream.of("", "null", "]", "}", ")", "(", "{", "(]", "[)", "{]", "([)]", "{()}", "([]){");
+    Stream<String> unhappyPath = Stream.of("", "null", "]", "}", ")", "(", "{", "(]", "[)", "{]", "([)]", "([]){");
 
     Consumer<String> testResultPrinter = s -> System.out.format("Input: %s. Output: %s.%n", s, isValid(s));
     Stream.concat(happyPath,borderPath).forEach(testResultPrinter);
@@ -35,31 +36,28 @@ class EasyInterviewValidParenthesis {
   }
 
   private static boolean isValid(String s) {
-    boolean result = false;
-    Stack<Character> stack = new Stack<>();
+    Stack<Character> open = new Stack<>();
+    Stack<Character> close = new Stack<>();
     for (char c : s.toCharArray()) {
       if (OPENINGS.contains(c)) {
-        stack.push(c);
+        open.push(c);
       } else if (CLOSINGS.contains(c)) {
-        try {
-          result = matchesPreviousOpening(c, stack.pop());
-        } catch (EmptyStackException ese) {
-          result = false; break;
-        }
-        if (!result) break;
-      } else {
-        result = false; break;
-      }
+        close.push(c);
+      } else return false;
     }
-    if (stack.size() > 0) result = false;
-    return result;
+    while (open.size() > 0 && close.size() > 0) {
+      if (areMatching(close.pop(), open.pop())) return false;
+    }
+    System.out.println(open);
+    System.out.println(close);
+    return open.size() == 0 || close.size() == 0;
   }
 
-  private static boolean matchesPreviousOpening(char c, Character poppedOpening) {
-    return switch (c) {
-      case '}' -> poppedOpening == '{';
-      case ')' -> poppedOpening == '(';
-      case ']' -> poppedOpening == '[';
+  private static boolean areMatching(Character close, Character open) {
+    return switch (close) {
+      case '}' -> open == '{';
+      case ')' -> open == '(';
+      case ']' -> open == '[';
       default -> false;
     };
   }
